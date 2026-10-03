@@ -1,0 +1,63 @@
+{
+  "note": "Accuracy sliced by abstract length (quartiles, Wilson 95% CIs) and by topic.",
+  "by_length": [
+    {
+      "quartile": "Q1 (shortest)",
+      "accuracy": 0.968,
+      "n": 62,
+      "ci95": [
+        0.89,
+        0.991
+      ]
+    },
+    {
+      "quartile": "Q2",
+      "accuracy": 0.935,
+      "n": 62,
+      "ci95": [
+        0.846,
+        0.975
+      ]
+    },
+    {
+      "quartile": "Q3",
+      "accuracy": 0.984,
+      "n": 64,
+      "ci95": [
+        0.917,
+        0.997
+      ]
+    },
+    {
+      "quartile": "Q4 (longest)",
+      "accuracy": 0.95,
+      "n": 60,
+      "ci95": [
+        0.863,
+        0.983
+      ]
+    }
+  ],
+  "by_topic": [
+    {
+      "topic": "asthma",
+      "accuracy": 1.0,
+      "n": 62
+    },
+    {
+      "topic": "diabetes",
+      "accuracy": 0.984,
+      "n": 62
+    },
+    {
+      "topic": "hypertension",
+      "accuracy": 0.855,
+      "n": 62
+    },
+    {
+      "topic": "migraine",
+      "accuracy": 1.0,
+      "n": 62
+    }
+  ]
+}
