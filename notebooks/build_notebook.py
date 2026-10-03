@@ -37,6 +37,8 @@ n = R["n"]
 md(f"""
 # Can an LLM replace human annotators? A reliability study
 
+## Background
+
 This notebook asks a practical question: if we let a large language model
 (Gemini 3.5 Flash-Lite) assign topic labels to biomedical abstracts, how much
 can we trust its labels? We treat the LLM like a new human annotator and put
@@ -54,11 +56,16 @@ actually means.
 """)
 
 md("""
-## 1. Setup
+## Setup
 
 We fix the random seed everywhere so every number in this notebook is
 reproducible. Reproducibility is not decoration: if a hiring manager reruns
 this notebook and gets different numbers, nothing else in it can be trusted.
+
+The input files are all committed: `data/abstracts.csv` (the 248 abstracts),
+`data/annotations.csv` (the LLM's labels and confidences), and `results.json`
+(the precomputed headline numbers). No API calls are needed to rerun the
+analysis.
 """)
 code("""
 import json, os, sys
@@ -83,7 +90,7 @@ print("seed:", SEED)
 """)
 
 md(f"""
-## 2. The data
+### The data
 
 We pulled {R['n']} abstracts from PubMed with the Entrez API, querying four
 fixed MeSH terms ("diabetes mellitus", "hypertension", "asthma",
@@ -105,11 +112,10 @@ abstracts = pd.read_csv("../data/abstracts.csv")
 print(abstracts.shape)
 print(abstracts["topic"].value_counts())
 print(abstracts[["n_words"]].describe().T)
-abstracts.head(2)
 """)
 
 md("""
-## 3. Getting the LLM's annotations
+## Method
 
 Each abstract went to Gemini 3.5 Flash-Lite with one prompt: classify into
 the four labels and return a confidence between 0 and 1 as strict JSON. One
@@ -138,7 +144,9 @@ print("usable items:", n)
 """)
 
 md(f"""
-## 4. Accuracy, with an honest interval
+## Results
+
+### Accuracy, with an honest interval
 
 A point estimate without an interval is a claim without evidence. With
 {n} items, the sampling noise is real: if we reran this study on a different
@@ -159,7 +167,7 @@ The LLM got {int(acc*n)} of {n} right: **{acc:.1%} (95% CI {acc_lo:.1%} to
 {acc_hi:.1%})**. That is the number to remember, and the interval is the
 number to quote alongside it.
 
-## 5. Agreement beyond accuracy: kappa and AC1
+### Agreement beyond accuracy: kappa and AC1
 
 Accuracy alone can flatter. If 90% of items belonged to one class, a lazy
 classifier that always predicts that class scores 90% accuracy while learning
@@ -190,7 +198,7 @@ print(f"Gwet's AC1:    {ac1:.3f} (95% bootstrap CI: {a_lo:.3f} to {a_hi:.3f})")
 """)
 
 md("""
-## 6. Where does it go wrong? Per-class metrics and the confusion matrix
+### Where does it go wrong? Per-class metrics and the confusion matrix
 
 An aggregate number hides which classes suffer. Precision tells us: of the
 items the LLM called "asthma", how many really were asthma? Recall tells us:
@@ -219,9 +227,13 @@ for i in range(len(LABELS)):
 fig.tight_layout(); fig.savefig("../figures/confusion_matrix.png")
 print("saved figures/confusion_matrix.png")
 """)
+code("""
+from IPython.display import Image
+Image("../figures/confusion_matrix.png")
+""")
 
 md(f"""
-## 7. Is the confidence honest? Calibration
+### Is the confidence honest? Calibration
 
 The model returns a confidence with each label. A confidence of 0.9 should
 mean the label is right about 90% of the time. If the model says 0.9 but is
@@ -241,7 +253,6 @@ conf = df["confidence"].to_numpy()
 bins = calibration_bins(conf, correct.astype(float), n_bins=10)
 ece = expected_calibration_error(conf, correct.astype(float), n_bins=10)
 print(f"ECE: {ece:.3f}")
-pd.DataFrame(bins)[["lo","hi","n","mean_confidence","accuracy"]].round(3)
 """)
 code("""
 x = [b["mean_confidence"] for b in bins]
@@ -261,9 +272,13 @@ ax.legend(loc="upper left")
 fig.tight_layout(); fig.savefig("../figures/calibration.png")
 print("saved figures/calibration.png")
 """)
+code("""
+from IPython.display import Image
+Image("../figures/calibration.png")
+""")
 
 md("""
-## 8. Beating a cheap baseline? McNemar's test
+### Beating a cheap baseline? McNemar's test
 
 We compare the LLM against a TF-IDF + logistic regression model trained on
 half the labeled data (a 50/50 split, stratified). Read the comparison
@@ -301,7 +316,7 @@ print(f"McNemar exact p = {p:.4f}")
 """)
 
 md("""
-## 9. Error analysis: length and topic
+### Error analysis: length and topic
 
 Two slices that often reveal structure. First, text length in quartiles:
 long abstracts carry more signal, but they also carry more distractors
@@ -323,7 +338,7 @@ print(df.groupby("topic")["correct"].agg(["mean", "count"]).round(3).to_string()
 """)
 
 md(f"""
-## 10. Cost per annotation
+### Cost per annotation
 
 Quality means little without price. The API returns exact token counts per
 call (`usageMetadata`), so the LLM cost is measured, not estimated: input
@@ -344,7 +359,7 @@ print(f"Human estimate per 1,000: ${c['human_cost_per_1000_usd_estimate']:.2f}")
 """)
 
 md(f"""
-## 11. Verdict
+## Takeaway
 
 Putting it together:
 
