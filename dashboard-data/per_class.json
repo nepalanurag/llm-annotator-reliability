@@ -1,0 +1,33 @@
+{
+  "note": "Per-class precision, recall, F1, support (LLM vs PubMed topic labels).",
+  "classes": [
+    {
+      "label": "diabetes",
+      "precision": 0.871,
+      "recall": 0.984,
+      "f1": 0.924,
+      "support": 62
+    },
+    {
+      "label": "hypertension",
+      "precision": 0.981,
+      "recall": 0.855,
+      "f1": 0.914,
+      "support": 62
+    },
+    {
+      "label": "asthma",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 62
+    },
+    {
+      "label": "migraine",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 62
+    }
+  ]
+}
