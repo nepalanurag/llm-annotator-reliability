@@ -6,28 +6,63 @@
 <title>Can an LLM replace human annotators? | Anurag Nepal</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <style>
-  :root { --ink: #1a1a1a; --muted: #555; --accent: #1f77b4; --line: #e2e2e2; }
-  body { font-family: Georgia, 'Times New Roman', serif; color: var(--ink);
-         max-width: 960px; margin: 0 auto; padding: 24px 20px 60px; line-height: 1.6; }
-  h1 { font-size: 1.9rem; margin-bottom: 0.2em; }
-  h2 { font-size: 1.35rem; border-bottom: 2px solid var(--ink); padding-bottom: 4px; margin-top: 2.2em; }
-  h3 { font-size: 1.1rem; margin-top: 1.6em; }
-  .byline { color: var(--muted); font-size: 0.95rem; }
-  .statgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 1.2em 0; }
-  .stat { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; background: #fafafa; }
-  .stat .v { font-size: 1.5rem; font-weight: bold; color: var(--accent); }
-  .stat .l { font-size: 0.85rem; color: var(--muted); }
-  table { border-collapse: collapse; width: 100%; margin: 1em 0; font-size: 0.95rem; }
-  th, td { border: 1px solid var(--line); padding: 7px 10px; text-align: left; }
-  th { background: #f2f2f2; }
-  img.fig { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; margin: 0.8em 0; }
-  .chart { width: 100%; height: 420px; margin: 0.8em 0; }
-  .note { background: #fff8e6; border-left: 4px solid #d9a400; padding: 10px 14px; margin: 1em 0; font-size: 0.95rem; }
-  footer { margin-top: 3em; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--line); padding-top: 12px; }
+  :root {
+    --bg: #f9fafb;
+    --card: #ffffff;
+    --ink: #111827;
+    --muted: #4b5563;
+    --line: #e5e7eb;
+    --accent: #2563eb;
+    --accent-soft: #eff6ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink); background: var(--bg); margin: 0; line-height: 1.65;
+  }
+  .topnav {
+    background: var(--card); border-bottom: 1px solid var(--line);
+    padding: 14px 24px; display: flex; align-items: center; gap: 14px;
+    font-size: 0.95rem; position: sticky; top: 0; z-index: 10;
+  }
+  .topnav a { color: var(--ink); text-decoration: none; font-weight: 600; }
+  .topnav a:hover { color: var(--accent); }
+  .topnav span { color: var(--muted); }
+  .page { max-width: 960px; margin: 0 auto; padding: 40px 24px 64px; }
+  h1 { font-size: 2rem; margin: 0 0 0.3em; letter-spacing: -0.01em; }
+  h2 { font-size: 1.4rem; margin: 2em 0 0.6em; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  h3 { font-size: 1.1rem; margin: 1.6em 0 0.5em; }
+  .byline, .sub { color: var(--muted); font-size: 0.95rem; }
   a { color: var(--accent); }
+  p { margin: 0.9em 0; }
+  section { margin-bottom: 1em; }
+  code { background: #f3f4f6; padding: 2px 6px; border-radius: 6px; font-size: 0.9em; }
+  .statgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin: 1.4em 0; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .stat .v { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+  .stat .l { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; margin: 1.2em 0; }
+  .card h3 { margin-top: 0; }
+  .desc { color: var(--muted); font-size: 0.9rem; }
+  .best { font-size: 0.95rem; margin: 12px 0 0; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 22px; margin: 1.2em 0; display: grid; gap: 10px; }
+  .kpi b { color: var(--accent); margin-right: 8px; }
+  .plot, .chart { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin: 1.2em 0; }
+  .chart { width: 100%; height: 420px; }
+  table { border-collapse: collapse; width: 100%; margin: 1.2em 0; font-size: 0.95rem; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+  th { background: var(--accent-soft); font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+  .note { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 12px 16px; margin: 1.2em 0; font-size: 0.95rem; border-radius: 0 8px 8px 0; }
+  img.fig { max-width: 100%; border: 1px solid var(--line); border-radius: 12px; margin: 1em 0; }
+  ul, ol { padding-left: 1.4em; }
+  li { margin: 0.4em 0; }
+  footer { margin-top: 3em; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--line); padding-top: 16px; }
 </style>
 </head>
 <body>
+<nav class="topnav"><a href="https://anurag-nepal-portfolio.vercel.app/">&larr; Anurag Nepal</a><span>Projects</span></nav>
+<div class="page">
 
 <h1>Can an LLM replace human annotators?</h1>
 <p class="byline">Anurag Nepal &middot; reliability study of Gemini 3.5 Flash-Lite as a
@@ -151,7 +186,7 @@ const xs = D.bins.map(b => b.mean_confidence), ys = D.bins.map(b => b.accuracy),
 Plotly.newPlot("calib", [
   {x: [0,1], y: [0,1], mode: "lines", line: {dash: "dash", color: "gray"}, name: "perfect calibration"},
   {x: xs, y: ys, mode: "markers+text", text: ns.map(v => "n="+v), textposition: "top center",
-   marker: {size: ns.map(v => 8 + 24*v/Math.max(...ns)), color: "#1f77b4"}, name: "binned predictions"}
+   marker: {size: ns.map(v => 8 + 24*v/Math.max(...ns)), color: "#2563eb"}, name: "binned predictions"}
 ], {xaxis: {range: [0,1], title: "mean predicted confidence"},
     yaxis: {range: [0,1], title: "observed accuracy"},
     title: "Calibration curve", margin: {t: 40}});
@@ -162,7 +197,7 @@ Plotly.newPlot("errlen", [{
   error_y: {type: "data",
     array: D.by_len.map(r => r.ci95[1] - r.accuracy),
     arrayminus: D.by_len.map(r => r.accuracy - r.ci95[0])},
-  type: "bar", marker: {color: "#1f77b4"}
+  type: "bar", marker: {color: "#2563eb"}
 }], {yaxis: {range: [0, 1.05], title: "accuracy"},
      title: "Accuracy by abstract length quartile (95% Wilson CI)", margin: {t: 40}});
 
@@ -174,5 +209,6 @@ Plotly.newPlot("errtopic", [{
 }], {yaxis: {range: [0, 1.05], title: "accuracy"},
      title: "Accuracy by topic", margin: {t: 40}});
 </script>
+</div>
 </body>
 </html>
