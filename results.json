@@ -1,0 +1,182 @@
+{
+  "n": 248,
+  "n_parse_failures": 0,
+  "seed": 20261002,
+  "model": "models/gemini-3.5-flash-lite",
+  "accuracy": 0.9596774193548387,
+  "accuracy_ci95": [
+    0.9273789323964281,
+    0.9779525450642839
+  ],
+  "kappa": 0.946236559139785,
+  "kappa_ci95": [
+    0.9085988804085238,
+    0.9783944600866428
+  ],
+  "ac1": 0.9462489885562363,
+  "ac1_ci95": [
+    0.9088733724254855,
+    0.9785076696420834
+  ],
+  "per_class": {
+    "diabetes": {
+      "precision": 0.8714285714285714,
+      "recall": 0.9838709677419355,
+      "f1": 0.9242424242424242,
+      "support": 62
+    },
+    "hypertension": {
+      "precision": 0.9814814814814815,
+      "recall": 0.8548387096774194,
+      "f1": 0.9137931034482759,
+      "support": 62
+    },
+    "asthma": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 62
+    },
+    "migraine": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 62
+    }
+  },
+  "ece": 0.01709677419354847,
+  "calibration_bins": [
+    {
+      "bin": 3,
+      "lo": 0.30000000000000004,
+      "hi": 0.4,
+      "n": 7,
+      "mean_confidence": 0.39999999999999997,
+      "accuracy": 0.5714285714285714
+    },
+    {
+      "bin": 4,
+      "lo": 0.4,
+      "hi": 0.5,
+      "n": 7,
+      "mean_confidence": 0.47857142857142865,
+      "accuracy": 0.42857142857142855
+    },
+    {
+      "bin": 5,
+      "lo": 0.5,
+      "hi": 0.6000000000000001,
+      "n": 3,
+      "mean_confidence": 0.5666666666666667,
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "bin": 6,
+      "lo": 0.6000000000000001,
+      "hi": 0.7000000000000001,
+      "n": 1,
+      "mean_confidence": 0.65,
+      "accuracy": 1.0
+    },
+    {
+      "bin": 8,
+      "lo": 0.8,
+      "hi": 0.9,
+      "n": 6,
+      "mean_confidence": 0.85,
+      "accuracy": 1.0
+    },
+    {
+      "bin": 9,
+      "lo": 0.9,
+      "hi": 1.0,
+      "n": 224,
+      "mean_confidence": 0.9922321428571428,
+      "accuracy": 0.9955357142857143
+    }
+  ],
+  "baseline": {
+    "name": "TF-IDF + logistic regression (trained on 50% labeled split)",
+    "test_n": 124,
+    "accuracy": 0.9435483870967742,
+    "accuracy_ci95": [
+      0.8880520154039525,
+      0.9723887290518981
+    ],
+    "llm_accuracy_same_test": 0.967741935483871,
+    "mcnemar_b01": 3,
+    "mcnemar_b10": 6,
+    "mcnemar_odds_ratio": 0.5,
+    "mcnemar_p": 0.5078125
+  },
+  "error_by_length": [
+    {
+      "quartile": "Q1 (shortest)",
+      "accuracy": 0.967741935483871,
+      "n": 62,
+      "ci95": [
+        0.8897953040501456,
+        0.9911086285001833
+      ]
+    },
+    {
+      "quartile": "Q2",
+      "accuracy": 0.9354838709677419,
+      "n": 62,
+      "ci95": [
+        0.8455248427224711,
+        0.9746270944795592
+      ]
+    },
+    {
+      "quartile": "Q3",
+      "accuracy": 0.984375,
+      "n": 64,
+      "ci95": [
+        0.9166589839990573,
+        0.9972364580766624
+      ]
+    },
+    {
+      "quartile": "Q4 (longest)",
+      "accuracy": 0.95,
+      "n": 60,
+      "ci95": [
+        0.8629948352365147,
+        0.9828504978356043
+      ]
+    }
+  ],
+  "error_by_topic": [
+    {
+      "topic": "asthma",
+      "accuracy": 1.0,
+      "n": 62
+    },
+    {
+      "topic": "diabetes",
+      "accuracy": 0.9838709677419355,
+      "n": 62
+    },
+    {
+      "topic": "hypertension",
+      "accuracy": 0.8548387096774194,
+      "n": 62
+    },
+    {
+      "topic": "migraine",
+      "accuracy": 1.0,
+      "n": 62
+    }
+  ],
+  "cost": {
+    "input_tokens_total": 126473,
+    "output_tokens_total": 5237,
+    "llm_cost_usd_total": 0.0510344,
+    "llm_cost_per_1000_usd": 0.20578387096774192,
+    "price_input_per_1m": 0.3,
+    "price_output_per_1m": 2.5,
+    "human_cost_per_item_usd_estimate": 0.25,
+    "human_cost_per_1000_usd_estimate": 250.0
+  }
+}

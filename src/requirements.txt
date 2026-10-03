@@ -1,0 +1,20 @@
+# Runtime requirements for llm-annotator-reliability
+#
+# Tested with Python 3.12 on Ubuntu. All packages were preinstalled; no
+# additional installs were needed. If you are setting up from scratch:
+#
+#   pip install numpy pandas scikit-learn scipy matplotlib plotly nbformat nbclient
+#
+# The analysis itself only needs: numpy, pandas, scikit-learn, scipy,
+# matplotlib. plotly is needed only for the dashboard HTML (via CDN at view
+# time, not at build time). nbformat/nbclient are needed only to rebuild and
+# re-execute the notebook.
+
+numpy
+pandas
+scikit-learn
+scipy
+matplotlib
+plotly
+nbformat
+nbclient
