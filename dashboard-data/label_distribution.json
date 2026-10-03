@@ -1,0 +1,16 @@
+{
+  "note": "True topic distribution (balanced by design) vs labels the LLM returned.",
+  "true_topics": {
+    "asthma": 62,
+    "migraine": 62,
+    "diabetes": 62,
+    "hypertension": 62
+  },
+  "llm_predicted": {
+    "diabetes": 70,
+    "asthma": 62,
+    "migraine": 62,
+    "hypertension": 54
+  },
+  "parse_failures": 0
+}
