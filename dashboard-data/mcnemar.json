@@ -1,0 +1,10 @@
+{
+  "note": "LLM (zero-shot) vs TF-IDF + logistic regression trained on half the labeled data. Paired comparison on the same 124 test items; McNemar exact test on discordant pairs.",
+  "test_n": 124,
+  "baseline": "TF-IDF + logistic regression (trained on 50% labeled split)",
+  "baseline_accuracy": 0.944,
+  "llm_accuracy_same_test": 0.968,
+  "discordant_baseline_only_right": 3,
+  "discordant_llm_only_right": 6,
+  "mcnemar_p": 0.5078
+}
