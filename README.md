@@ -23,6 +23,10 @@ of topic labeling, but not a replacement for human adjudication where labels
 carry real consequences. The practical pattern is LLM labels everything,
 humans review the low-confidence and disputed items.
 
+## Interactive dashboard
+
+Results are easiest to explore in the interactive dashboard: https://anurag-nepal-portfolio.vercel.app/ai-lab/llm-annotator-reliability/
+
 ## Data
 
 248 abstracts fetched from PubMed via the Entrez API (October 2026) using four
