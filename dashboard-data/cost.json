@@ -1,0 +1,12 @@
+{
+  "note": "Measured LLM cost from API usageMetadata token counts; human cost is an estimate from published labeling rates.",
+  "n_annotations": 248,
+  "input_tokens_total": 126473,
+  "output_tokens_total": 5237,
+  "price_input_per_1m_usd": 0.3,
+  "price_output_per_1m_usd": 2.5,
+  "llm_cost_usd_total": 0.051,
+  "llm_cost_per_1000_usd": 0.21,
+  "human_cost_per_item_usd_estimate": 0.25,
+  "human_cost_per_1000_usd_estimate": 250.0
+}
