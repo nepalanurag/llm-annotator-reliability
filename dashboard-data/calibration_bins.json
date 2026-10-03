@@ -1,0 +1,47 @@
+{
+  "note": "Confidence calibration: confidences binned into deciles, observed accuracy per bin. Diagonal (accuracy == mean_confidence) is perfect calibration.",
+  "bins": [
+    {
+      "lo": 0.3,
+      "hi": 0.4,
+      "n": 7,
+      "mean_confidence": 0.4,
+      "accuracy": 0.571
+    },
+    {
+      "lo": 0.4,
+      "hi": 0.5,
+      "n": 7,
+      "mean_confidence": 0.479,
+      "accuracy": 0.429
+    },
+    {
+      "lo": 0.5,
+      "hi": 0.6,
+      "n": 3,
+      "mean_confidence": 0.567,
+      "accuracy": 0.333
+    },
+    {
+      "lo": 0.6,
+      "hi": 0.7,
+      "n": 1,
+      "mean_confidence": 0.65,
+      "accuracy": 1.0
+    },
+    {
+      "lo": 0.8,
+      "hi": 0.9,
+      "n": 6,
+      "mean_confidence": 0.85,
+      "accuracy": 1.0
+    },
+    {
+      "lo": 0.9,
+      "hi": 1.0,
+      "n": 224,
+      "mean_confidence": 0.992,
+      "accuracy": 0.996
+    }
+  ]
+}
