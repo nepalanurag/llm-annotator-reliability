@@ -1,0 +1,10 @@
+# Pinned 2026-10-05. Python 3.12.
+# The analysis (run_analysis.py) runs fully offline on the committed
+# data/api_cache/; only fresh annotation runs need the Gemini credential
+# (via the custom.google-gemini connector, not a key in this repo).
+numpy==2.2.4
+pandas==2.2.3
+scikit-learn==1.6.1
+scipy==1.14.1
+matplotlib==3.10.1
+requests==2.32.3
