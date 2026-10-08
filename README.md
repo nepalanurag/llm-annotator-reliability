@@ -147,7 +147,47 @@ llm-annotator-reliability/
   figures/
     confusion_matrix.png  calibration.png  per_class_metrics.png
     cost_comparison.png
+  pipeline/               production annotation infrastructure (Dagster)
+    defs.py               extract -> chunk -> dedup -> annotate -> agreement
+    backends.py           pluggable backends: rule ($0) + gemini (API)
+    experiment_tracking.py  SQLite run log: model, prompt sha, metrics
+    monitoring.py         label-drift monitor (PSI + chi-square)
+    ai_adversarial.py     hard-case generator -> adversarial_report.md
+    ai_clustering.py      disagreement taxonomy -> disagreement_taxonomy.md
+    prompts/              versioned prompts (v1, v2), never inline
+    tests/                60 tests with hand-verified reference values
+    COST.md               per-1k-annotation cost table
 ```
+
+## Production annotation pipeline
+
+`pipeline/` is the production companion to this study: a Dagster pipeline
+that takes the annotation workflow from one-off script to repeatable
+infrastructure.
+
+- **Batch annotation**: arXiv extract (or the published CSV) → sentence-aware
+  chunking → MinHash dedup → pluggable backends (a $0 keyword baseline that
+  runs offline, plus the Gemini annotator on a *versioned* prompt file) →
+  agreement metrics (Fleiss κ, Krippendorff α, per-category agreement) →
+  versioned, DVC-tracked batch dirs.
+- **Experiment tracking**: every run logs backend, model id, prompt sha256,
+  batch config, and metrics to SQLite. Prompts are versioned files, never
+  inline strings.
+- **Drift monitoring**: weekly scheduled check of incoming label marginals
+  against the committed baseline (PSI + chi-square), with markdown reports.
+- **AI-assisted analysis**: an adversarial case generator targeting the
+  weakest categories (the diabetes/hypertension boundary from §4.5), and an
+  auto-clustered disagreement taxonomy (TF-IDF + HDBSCAN) compared against the
+  human-written error analysis.
+- **Human vs AI-assisted workflow**: the pipeline README quantifies it —
+  LLM first pass ($0.21/1k, measured) plus human review of the ~10%
+  low-confidence items the calibration curve flags comes to ~$24.50/1k,
+  roughly a 10× cut versus fully manual (~$250/1k estimate).
+
+Measured in the pipeline (rule baseline vs the 248 published annotations):
+3-rater Fleiss κ 0.924 across [distant label, Gemini, rule]; per-category
+agreement reproduces the study's finding (diabetes 0.820, hypertension 0.812
+weakest). See `pipeline/README.md` for the full quickstart and cost model.
 
 ## References
 
