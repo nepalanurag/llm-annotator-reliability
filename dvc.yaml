@@ -1,0 +1,53 @@
+# DVC stage graph for the annotation pipeline. Dagster (pipeline/defs.py) is the
+# primary orchestrator; these stages give a plain `dvc repro` path and make
+# each intermediate a versioned artifact.
+stages:
+  extract:
+    cmd: python -m pipeline.extract --from-csv data/abstracts.csv --out pipeline/batches/_stage/raw.parquet
+    deps:
+      - data/abstracts.csv
+      - pipeline/extract.py
+    params:
+      - params.yaml:
+          - extract.max_results
+    outs:
+      - pipeline/batches/_stage/raw.parquet
+
+  chunk:
+    cmd: python -m pipeline.chunking_cli pipeline/batches/_stage/raw.parquet --out pipeline/batches/_stage/chunks.jsonl
+    deps:
+      - pipeline/batches/_stage/raw.parquet
+      - pipeline/chunking_cli.py
+      - pipeline/chunking.py
+    params:
+      - params.yaml:
+          - chunk.chunk_tokens
+          - chunk.overlap
+    outs:
+      - pipeline/batches/_stage/chunks.jsonl
+
+  dedup:
+    cmd: python -m pipeline.deduplication pipeline/batches/_stage/chunks.jsonl --out pipeline/batches/_stage/kept.jsonl --stats pipeline/batches/_stage/dedup.json
+    deps:
+      - pipeline/batches/_stage/chunks.jsonl
+      - pipeline/deduplication.py
+    params:
+      - params.yaml:
+          - dedup.threshold
+    outs:
+      - pipeline/batches/_stage/kept.jsonl
+      - pipeline/batches/_stage/dedup.json
+
+  annotate:
+    cmd: python -m pipeline.annotate pipeline/batches/_stage/kept.jsonl --backend rule --prompt v1 --batch-id dvc-batch
+    deps:
+      - pipeline/batches/_stage/kept.jsonl
+      - pipeline/annotate.py
+      - pipeline/backends.py
+    params:
+      - params.yaml:
+          - annotate.backend
+          - annotate.prompt_version
+    outs:
+      - pipeline/batches/dvc-batch:
+          persist: true

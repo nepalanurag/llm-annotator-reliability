@@ -1,0 +1,29 @@
+name: pipeline-ci
+
+# Runs the annotation pipeline's test suite on every push touching pipeline/.
+# Fully offline: the rule backend and synthetic fixtures need no credentials.
+on:
+  push:
+    paths:
+      - "pipeline/**"
+      - ".github/workflows/pipeline-ci.yml"
+  pull_request:
+    paths:
+      - "pipeline/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned dependencies
+        run: pip install -r pipeline/requirements.txt
+      - name: Ruff
+        run: ruff check pipeline/
+      - name: Black
+        run: black --check pipeline/
+      - name: Pytest
+        run: pytest pipeline/tests -q

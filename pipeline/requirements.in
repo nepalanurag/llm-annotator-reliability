@@ -1,0 +1,16 @@
+# Build-time pins for pipeline/requirements.txt (resolved 2026-10-08).
+# Extends the repo's requirements.txt (numpy, pandas, scikit-learn, scipy,
+# matplotlib, requests). Versions below are PyPI-latest as of 2026-10-08;
+# pipeline/requirements.txt carries the exact resolved freeze.
+dagster==1.13.25
+pydantic-settings==2.15.0
+structlog==26.1.0
+pandera==0.23.1
+datasketch==1.6.5
+hdbscan==0.8.44
+dvc==3.67.1
+pyarrow==19.0.1
+pytest==8.3.5
+pyyaml==6.0.2
+ruff==0.14.4
+black==25.9.0

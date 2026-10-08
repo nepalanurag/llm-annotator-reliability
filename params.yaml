@@ -1,0 +1,14 @@
+# Pipeline parameters (also readable via ANNOT_* env vars; see pipeline/config.py).
+extract:
+  max_results: 50
+chunk:
+  chunk_tokens: 256
+  overlap: 0.15
+dedup:
+  threshold: 0.8
+annotate:
+  backend: rule # or: gemini (needs the custom.google-gemini connector credential)
+  prompt_version: v1
+monitoring:
+  psi_alert_threshold: 0.25
+  psi_warning_threshold: 0.10

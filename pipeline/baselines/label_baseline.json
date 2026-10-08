@@ -1,0 +1,11 @@
+{
+  "contract_version": "1.0",
+  "source_batch": "20261008T165103Z-5a452d68",
+  "note": "Predicted-label marginals of the rule-backend dry-run batch. Replace with a production batch before use.",
+  "distribution": {
+    "migraine": 0.4783,
+    "diabetes": 0.2609,
+    "hypertension": 0.2174,
+    "asthma": 0.0435
+  }
+}
