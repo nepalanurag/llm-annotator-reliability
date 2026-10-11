@@ -179,8 +179,7 @@ infrastructure.
   weakest categories (the diabetes/hypertension boundary from §4.5), and an
   auto-clustered disagreement taxonomy (TF-IDF + HDBSCAN) compared against the
   human-written error analysis.
-- **Human vs AI-assisted workflow**: the pipeline README quantifies it —
-  LLM first pass ($0.21/1k, measured) plus human review of the ~10%
+- **Human vs AI-assisted workflow**: the pipeline README quantifies it as LLM first pass ($0.21/1k, measured) plus human review of the ~10%
   low-confidence items the calibration curve flags comes to ~$24.50/1k,
   roughly a 10× cut versus fully manual (~$250/1k estimate).
 
